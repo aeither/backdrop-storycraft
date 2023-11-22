@@ -1,3 +1,14 @@
+# StoryCraft
+
+switch from local to testnet in `scaffold.config.ts`
+
+```ts
+// targetNetwork: chains.foundry,
+targetNetwork: chains.sepolia,
+```
+
+
+
 Remember to add env variables on local and also on Vercel
 
 # 🏗 Scaffold-ETH 2
