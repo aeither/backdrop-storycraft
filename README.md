@@ -7,8 +7,6 @@ switch from local to testnet in `scaffold.config.ts`
 targetNetwork: chains.sepolia,
 ```
 
-
-
 Remember to add env variables on local and also on Vercel
 
 # 🏗 Scaffold-ETH 2
