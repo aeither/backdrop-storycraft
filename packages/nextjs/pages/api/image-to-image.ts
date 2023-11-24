@@ -6,6 +6,15 @@ export const config = {
   runtime: "edge",
 };
 
+// Note: The current engine ID "stable-diffusion-v1-6" does not support image-to-image conversion at this time.
+
+// const engineId = "stable-diffusion-v1-6";
+const engineId = "stable-diffusion-xl-1024-v1-0";
+const apiHost = process.env.API_HOST ?? "https://api.stability.ai";
+const apiKey = process.env.STABILITY_API_KEY;
+
+if (!apiKey) throw new Error("Missing Stability API key.");
+
 // You can use an example image here: https://github.com/OvidijusParsiunas/deep-chat/blob/main/example-servers/ui/assets/example-image.png
 async function handler(req: NextRequest) {
   // Files are stored inside a form using Deep Chat request FormData format:
@@ -23,22 +32,19 @@ async function handler(req: NextRequest) {
   const imageToImageFormData = new FormData();
 
   imageToImageFormData.append("init_image", imageFile, "image.png");
-  // When sending text along with files, it is stored inside the request body using the Deep Chat JSON format:
-  // https://deepchat.dev/docs/connect
-  //   const text = (JSON.parse(reqFormData.get("message1") as string) as MessageContent).text;
-  //   if (!text) throw "Error text from message1 undefined";
-
   imageToImageFormData.append("init_image_mode", "IMAGE_STRENGTH");
   imageToImageFormData.append("image_strength", "0.35");
   imageToImageFormData.append("text_prompts[0][text]", "Galactic dog wearing a cape");
   imageToImageFormData.append("text_prompts[0][weight]", "1");
+  imageToImageFormData.append("width", "1024");
+  imageToImageFormData.append("height", "1024");
   imageToImageFormData.append("cfg_scale", "7");
   imageToImageFormData.append("samples", "1");
   imageToImageFormData.append("steps", "30");
 
-  const result = await fetch("https://api.stability.ai/v1/generation/stable-diffusion-v1-6/image-to-image", {
+  const result = await fetch(`${apiHost}/v1/generation/${engineId}/image-to-image`, {
     // Be careful not to overwrite Content-Type headers as the Boundary header will not be automatically set
-    headers: { Authorization: `Bearer ${process.env.STABILITY_API_KEY}` },
+    headers: { Authorization: `Bearer ${apiKey}` },
     method: "POST",
     body: imageToImageFormData as unknown as string, // This gets rid of the type error for fetch
   });

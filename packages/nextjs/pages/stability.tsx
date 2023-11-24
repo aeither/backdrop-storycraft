@@ -2,12 +2,6 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import { UploadButton } from "~~/utils/uploadthing";
 
-const engineId = "stable-diffusion-v1-6";
-const apiHost = process.env.API_HOST ?? "https://api.stability.ai";
-const apiKey = process.env.STABILITY_API_KEY;
-
-// if (!apiKey) throw new Error("Missing Stability API key.");
-
 const Stability: NextPage = () => {
   const [currentImage, setCurrentImage] = useState("https://utfs.io/f/11307319-c248-48ff-8e59-60119c8f0cb8-c6yva7.jpg");
 
