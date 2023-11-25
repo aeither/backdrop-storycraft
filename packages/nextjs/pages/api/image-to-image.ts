@@ -22,7 +22,7 @@ async function handler(req: NextRequest) {
   //   const reqFormData = await req.formData();
   //   const file = reqFormData.get("files") as Blob;
 
-  const response = await fetch("https://i.imgur.com/irlLOUx.png");
+  const response = await fetch("https://i.imgur.com/WUOhEpg.png");
   const imageData = await response.blob();
 
   // const imageData = await getBase64("https://i.imgur.com/irlLOUx.png");
@@ -36,8 +36,8 @@ async function handler(req: NextRequest) {
   imageToImageFormData.append("image_strength", "0.35");
   imageToImageFormData.append("text_prompts[0][text]", "Galactic dog wearing a cape");
   imageToImageFormData.append("text_prompts[0][weight]", "1");
-  imageToImageFormData.append("width", "1024");
-  imageToImageFormData.append("height", "1024");
+  // imageToImageFormData.append("width", "1024");
+  // imageToImageFormData.append("height", "1024");
   imageToImageFormData.append("cfg_scale", "7");
   imageToImageFormData.append("samples", "1");
   imageToImageFormData.append("steps", "30");
