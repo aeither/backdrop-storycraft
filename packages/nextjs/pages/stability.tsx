@@ -5,6 +5,7 @@ import { UploadButton } from "~~/utils/uploadthing";
 const Stability: NextPage = () => {
   const [currentImage, setCurrentImage] = useState("https://utfs.io/f/11307319-c248-48ff-8e59-60119c8f0cb8-c6yva7.jpg");
   const [base64Image, setBase64Image] = useState("");
+  const [textInput, setTextInput] = useState("");
 
   const convertImage = async () => {
     try {
@@ -27,6 +28,24 @@ const Stability: NextPage = () => {
     }
   };
 
+  // Function to call the Next.js API endpoint
+  async function callTextToImageAPI(text: string) {
+    const response = await fetch("/api/text-to-image", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to call the API");
+    }
+
+    const data = await response.json();
+    return data;
+  }
+
   return (
     <div>
       <UploadButton
@@ -40,8 +59,30 @@ const Stability: NextPage = () => {
         }}
       />
       <img className="w-full h-auto" src={base64Image} alt="Base64 encoded" />
+
+      <input
+        className="input"
+        type="text"
+        onChange={e => {
+          setTextInput(e.target.value);
+        }}
+      />
       <button onClick={convertImage} className="btn btn-primary">
         Convert
+      </button>
+      <button
+        onClick={() => {
+          callTextToImageAPI(textInput)
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        }}
+        className="btn btn-primary"
+      >
+        Generate
       </button>
     </div>
   );
