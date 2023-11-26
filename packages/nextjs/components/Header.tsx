@@ -18,17 +18,8 @@ const isLocalNetwork = getTargetNetwork().id === hardhat.id;
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
-  {
     label: "Imagine",
-    href: "/imagine",
+    href: "/",
   },
   {
     label: "Narrate",
@@ -39,6 +30,13 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/discovery",
   },
 ];
+
+if (isLocalNetwork)
+  menuLinks.push({
+    label: "Debug Contracts",
+    href: "/debug",
+    icon: <BugAntIcon className="h-4 w-4" />,
+  });
 
 export const HeaderMenuLinks = () => {
   const router = useRouter();
