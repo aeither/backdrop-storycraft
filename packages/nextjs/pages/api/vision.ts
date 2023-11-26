@@ -35,11 +35,16 @@ async function handler(req: NextRequest) {
       {
         role: "user",
         content: [
+          "Describe the images in a few sentences. Add excitement and emotion to the story. Be concise and clear. The story should connect seamlessly from one image to the next.",
           {
             type: "image_url",
             image_url: imageUrl,
           },
-          "Describe the image in a few sentences. Add excitement and emotion to the story. Be concise and clear.",
+          {
+            type: "image_url",
+            image_url:
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+          },
         ],
       },
     ],
