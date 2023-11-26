@@ -5,6 +5,20 @@
 <!-- New User Claim: claim token-->
 <!-- Smart Contract: mint token to new users, add rep to receiver, transfer token-->
 
+## Quick Start
+
+```bash
+yarn chain
+```
+
+```bash
+yarn deploy
+```
+
+```bash
+yarn start
+```
+
 ## Overview
 
 ## Tech Stack

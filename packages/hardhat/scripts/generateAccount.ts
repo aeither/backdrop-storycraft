@@ -1,6 +1,6 @@
-const ethers = require("ethers");
-const { parse, stringify } = require("envfile");
-const fs = require("fs");
+import { ethers } from "ethers";
+import { parse, stringify } from "envfile";
+import * as fs from "fs";
 
 const envFilePath = "./.env";
 
@@ -19,13 +19,12 @@ const setNewEnvConfig = (existingEnvConfig = {}) => {
 
   // Store in .env
   fs.writeFileSync(envFilePath, stringify(newEnvConfig));
-  console.log("📄 Private Key saved to packages/foundry/.env file");
+  console.log("📄 Private Key saved to packages/hardhat/.env file");
   console.log("🪄 Generated wallet address:", randomWallet.address);
 };
 
 async function main() {
   if (!fs.existsSync(envFilePath)) {
-    console.log("entered here");
     // No .env file yet.
     setNewEnvConfig();
     return;
@@ -34,16 +33,14 @@ async function main() {
   // .env file exists
   const existingEnvConfig = parse(fs.readFileSync(envFilePath).toString());
   if (existingEnvConfig.DEPLOYER_PRIVATE_KEY) {
-    console.log(
-      "⚠️ You already have a deployer account. Check the packages/foundry/.env file"
-    );
+    console.log("⚠️ You already have a deployer account. Check the packages/hardhat/.env file");
     return;
   }
 
   setNewEnvConfig(existingEnvConfig);
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });
