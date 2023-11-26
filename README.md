@@ -1,5 +1,18 @@
 # StoryCraft
 
+<!-- Share Form: author eth address, story, photos-->
+<!-- Upvote Button: send token, add reputation-->
+<!-- New User Claim: claim token-->
+<!-- Smart Contract: mint token to new users, add rep to receiver, transfer token-->
+
+## Overview
+
+## Tech Stack
+
+## What Next
+
+## Screenshots
+
 switch from local to testnet in `scaffold.config.ts`
 
 ```ts
