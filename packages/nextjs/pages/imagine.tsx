@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import { useStore } from "zustand";
 import useTimelineStore from "~~/services/store/timelineStore";
 import { TextToImageResponse } from "~~/types/stability";
 import { UploadButton, useUploadThing } from "~~/utils/uploadthing";
@@ -186,6 +185,7 @@ const Stability: NextPage = () => {
           await addToTimeline();
         }}
         className="btn btn-primary"
+        disabled={isLoading}
       >
         Add to timeline
       </button>
