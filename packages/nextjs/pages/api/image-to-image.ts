@@ -21,7 +21,8 @@ async function handler(req: NextRequest) {
   // https://deepchat.dev/docs/connect
   //   const reqFormData = await req.formData();
   //   const file = reqFormData.get("files") as Blob;
-  const { imageUrl } = await req.json();
+  const { imageUrl, prompt } = await req.json();
+  console.log("🚀 ~ file: image-to-image.ts:25 ~ handler ~ imageUrl:", imageUrl);
   const response = await fetch(imageUrl);
   const imageData = await response.blob();
 
@@ -34,7 +35,7 @@ async function handler(req: NextRequest) {
   imageToImageFormData.append("init_image", imageFile, "image.png");
   imageToImageFormData.append("init_image_mode", "IMAGE_STRENGTH");
   imageToImageFormData.append("image_strength", "0.35");
-  imageToImageFormData.append("text_prompts[0][text]", "Galactic dog wearing a cape");
+  imageToImageFormData.append("text_prompts[0][text]", prompt);
   imageToImageFormData.append("text_prompts[0][weight]", "1");
   // imageToImageFormData.append("width", "1024");
   // imageToImageFormData.append("height", "1024");
