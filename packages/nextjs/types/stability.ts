@@ -3,6 +3,15 @@ export interface StabilityAITextToImageResult {
   message?: string;
 }
 
+interface File {
+  type: "image" | "audio" | "any";
+  src: string;
+}
+
+export interface TextToImageResponse {
+  files: File[];
+}
+
 export type MessageContent = {
   role?: string;
   text?: string;

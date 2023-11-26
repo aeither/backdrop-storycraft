@@ -21,8 +21,8 @@ async function handler(req: NextRequest) {
   // https://deepchat.dev/docs/connect
   //   const reqFormData = await req.formData();
   //   const file = reqFormData.get("files") as Blob;
-
-  const response = await fetch("https://i.imgur.com/WUOhEpg.png");
+  const { imageUrl } = await req.json();
+  const response = await fetch(imageUrl);
   const imageData = await response.blob();
 
   // const imageData = await getBase64("https://i.imgur.com/irlLOUx.png");
@@ -54,7 +54,8 @@ async function handler(req: NextRequest) {
   // Sends response back to Deep Chat using the Response format:
   // https://deepchat.dev/docs/connect/#Response
   return NextResponse.json({
-    files: [{ type: "image", src: `data:image/png;base64,${stabilityAIResult.artifacts[0].base64}` }],
+    type: "image",
+    src: `data:image/png;base64,${stabilityAIResult.artifacts[0].base64}`,
   });
 }
 
