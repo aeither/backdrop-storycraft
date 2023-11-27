@@ -10,6 +10,7 @@ const Home: NextPage = () => {
   const timeline = useTimelineStore(state => state.timeline);
   const [story, setStory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [base64Audio, setBase64Audio] = useState<string | null>(null);
 
   async function generateStory(imageUrl: string) {
     console.log("Calling API");
@@ -35,6 +36,30 @@ const Home: NextPage = () => {
     setIsLoading(false);
     // return data.files[0].src;
     // Discover
+  }
+
+  async function genAudio(story: string) {
+    console.log("Calling genAudio");
+    setIsLoading(true);
+
+    const response = await fetch("/api/tts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: story }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to call the API");
+    }
+
+    console.log("Call successful");
+
+    const resp = await response.json();
+    setBase64Audio(resp.data);
+
+    setIsLoading(false);
   }
 
   return (
@@ -72,11 +97,20 @@ const Home: NextPage = () => {
         <button
           className="btn btn-primary"
           onClick={async () => {
-            generateStory(timeline[0].imageUrl);
+            genAudio(story);
           }}
         >
           Narrate
         </button>
+
+        {base64Audio ? (
+          <audio controls>
+            <source src={`data:audio/mp3;base64,${base64Audio}`} type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+        ) : (
+          <p>Loading audio...</p>
+        )}
       </div>
     </>
   );

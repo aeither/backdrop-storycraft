@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import OpenAI from "openai";
 import { APIError, ChatCompletion, GPT4VCompletionRequest } from "~~/types/ai";
 import errorHandler from "~~/utils/errorHandler";
 
-const elevenlabKey = process.env.ELEVENLABS_KEY;
+const openaiKey = process.env.OPENAI_KEY;
+if (!openaiKey) throw new Error("Missing Stability API key.");
+
+const openai = new OpenAI({
+  apiKey: openaiKey,
+});
+
+const systemPrompt = `You are an expert story teller. A user will provide you one or more photos and you will return a video script that narrates through the images in a compelling way.
+assign each paragraph to the each photo. Respond in a way to help the user use each paragraph to each photo accordingly.`;
 
 export interface TextRequestBody {
   text?: string;
@@ -11,41 +20,36 @@ export interface TextRequestBody {
 export const config = {
   runtime: "edge",
 };
+
+// Make sure to set the STABILITY_API_KEY environment variable
+const engineId = "stable-diffusion-v1-6";
 async function handler(req: NextRequest) {
-  const { text } = (await req.json()) as TextRequestBody;
-  if (!text) throw new Error("Missing text");
-  if (!elevenlabKey) throw new Error("Missing Stability API key.");
+  const jsonBody = await req.json();
+  const { text } = jsonBody as TextRequestBody;
 
-  let data;
-  const options = {
-    method: "POST",
-    headers: {
-      "xi-api-key": elevenlabKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ model_id: "eleven_monolingual_v1", text: text }),
-  };
-
-  try {
-    const response = await fetch("https://api.elevenlabs.io/v1/text-to-speech/VR6AewLTigWG4xSOukaG", options);
-    if (!response.ok) {
-      console.error(`Server responded with status ${response.status}`);
-      return;
-    }
-    data = await response.json();
-    console.log(data);
-  } catch (err) {
-    console.error(err);
+  if (!text) {
+    throw new Error("Missing text");
   }
-  return NextResponse.json(data);
+
+  let mp3Based64;
+  try {
+    const mp3 = await openai.audio.speech.create({
+      model: "tts-1",
+      voice: "alloy",
+      input: text,
+      response_format: "mp3",
+    });
+
+    if (mp3.ok) {
+      mp3Based64 = Buffer.from(await mp3.arrayBuffer()).toString("base64");
+    } else {
+      mp3Based64 = { ok: false };
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  return NextResponse.json({ data: mp3Based64 });
 }
 
 export default errorHandler(handler);
-
-// .blob .createObjectURL, .data
-// if (! elevenlabsRes.ok) {
-//     throw new Error(`ElevenLabs API Error (${elevenlabsRes.status})`);
-//   }
-//   const data = (await elevenlabsRes.arrayBuffer()) as any;
-
-//   return { audio: data };

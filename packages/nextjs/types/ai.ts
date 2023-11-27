@@ -128,3 +128,5 @@ export type GPT4VCompletionRequest = {
     | undefined;
   stop?: (string[] | string) | undefined;
 };
+
+export const OPENAI_TTS_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"] as const;
