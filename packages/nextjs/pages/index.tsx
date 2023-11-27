@@ -139,7 +139,7 @@ const Stability: NextPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 px-2 py-8">
-      <div className="flex gap-4 w-full items-start justify-between max-w-lg">
+      <div className="flex gap-4 w-full items-center justify-between max-w-lg">
         <h2 className="text-xl">Upload 1024x1024 PNG</h2>
         <UploadButton
           endpoint="imageUploader"
