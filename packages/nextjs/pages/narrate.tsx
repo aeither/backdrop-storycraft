@@ -41,6 +41,15 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10 gap-4">
+        <ul>
+          {timeline.map((item, index) => (
+            <li key={index}>
+              <span>{item.id}</span>
+              <img className="w-full max-w-lg h-auto" src={item.imageUrl} alt="image" />
+            </li>
+          ))}
+        </ul>
+
         <button
           className="btn btn-primary"
           onClick={async () => {

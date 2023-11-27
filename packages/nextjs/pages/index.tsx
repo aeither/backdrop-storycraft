@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import type { NextPage } from "next";
 import useTimelineStore from "~~/services/store/timelineStore";
 import { TextToImageResponse } from "~~/types/stability";
@@ -137,33 +138,50 @@ const Stability: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4 p-2">
-      <UploadButton
-        endpoint="imageUploader"
-        onClientUploadComplete={res => {
-          console.log("Files: ", res);
-          setCurrentImage(res[0]?.url);
-          setLastType("uploaded");
-        }}
-        onUploadError={(error: Error) => {
-          alert(`ERROR! ${error.message}`);
-        }}
-      />
-      <img
-        className="w-full max-w-lg h-auto"
-        src={base64Image || currentImage || "https://via.placeholder.com/1024"}
-        alt="Base64 encoded"
-      />
-      <div>
+    <div className="flex flex-col justify-center items-center gap-4 px-2 py-8">
+      <div className="flex gap-4 w-full items-start justify-between max-w-lg">
+        <h2 className="text-xl">Upload 1024x1024 PNG</h2>
+        <UploadButton
+          endpoint="imageUploader"
+          onClientUploadComplete={res => {
+            console.log("Files: ", res);
+            setCurrentImage(res[0]?.url);
+            setLastType("uploaded");
+          }}
+          onUploadError={(error: Error) => {
+            alert(`ERROR! ${error.message}`);
+          }}
+        />
+      </div>
+      <div className="relative">
+        <button
+          onClick={async () => {
+            await addToTimeline();
+          }}
+          className="btn btn-accent absolute bottom-2 right-2"
+          disabled={isLoading}
+        >
+          Add to timeline
+        </button>
+        <img
+          className="w-full max-w-lg h-auto rounded-md"
+          src={base64Image || currentImage || "https://via.placeholder.com/1024"}
+          alt="Base64 encoded"
+        />
+      </div>
+      <div className="flex flex-col w-full  max-w-lg">
+        <label htmlFor="">Describe</label>
         <input
-          className="input"
+          className="input "
           type="text"
           onChange={e => {
             setTextInput(e.target.value);
           }}
         />
+      </div>
+      <div className="flex gap-4 p-2">
         <button disabled={!base64Image && !currentImage} onClick={convertImage} className="btn btn-secondary">
-          Convert
+          Edit
         </button>
         <button
           onClick={async () => {
@@ -180,28 +198,27 @@ const Stability: NextPage = () => {
           Generate
         </button>
       </div>
-      <button
-        onClick={async () => {
-          await addToTimeline();
-        }}
-        className="btn btn-primary"
-        disabled={isLoading}
-      >
-        Add to timeline
-      </button>
 
       <div>Timeline</div>
-      <button className="btn" onClick={resetTimeline}>
-        Reset
-      </button>
-      <ul>
-        {timeline.map((item, index) => (
-          <li key={index}>
-            <span>{item.id}</span>
-            <span>{item.imageUrl}</span>
-          </li>
-        ))}
-      </ul>
+
+      <div className="w-full flex border rounded-md p-4 m-4">
+        <ul className="flex overflow-x-auto space-x-4">
+          <div className="flex flex-col gap-4 justify-center">
+            <button className="btn btn-error" onClick={resetTimeline}>
+              Delete All
+            </button>
+            <Link href={"/narrate"} passHref>
+              <button className="btn btn-outline w-full">Next</button>
+            </Link>
+          </div>
+          {timeline.map((item, index) => (
+            <li key={index} className="flex-none">
+              {/* <span>{item.id}</span> */}
+              <img className="w-36 h-auto rounded-md" src={item.imageUrl} alt="image" />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
