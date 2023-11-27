@@ -180,7 +180,11 @@ const Stability: NextPage = () => {
         />
       </div>
       <div className="flex gap-4 p-2">
-        <button disabled={!base64Image && !currentImage} onClick={convertImage} className="btn btn-secondary">
+        <button
+          disabled={(!base64Image && !currentImage) || isLoading}
+          onClick={convertImage}
+          className="btn btn-secondary"
+        >
           Edit
         </button>
         <button
