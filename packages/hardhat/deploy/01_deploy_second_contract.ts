@@ -25,7 +25,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const chainID = await getChainId();
   const admin = chainID === "31337" ? "0x4B28B60CADaeD1f42bCD0e27943ffE7ff277C68f" : deployer;
 
-  await deploy("SecondContract", {
+  await deploy("NFTContract", {
     from: deployer,
     // Contract constructor arguments
     args: [admin, "Crafted Story", "SCS", admin, 0],
