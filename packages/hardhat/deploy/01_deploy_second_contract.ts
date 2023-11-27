@@ -19,18 +19,16 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     with a random private key in the .env file (then used on hardhat.config.ts)
     You can run the `yarn account` command to check your balance in every network.
   */
-
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
   const chainID = await getChainId();
   const admin = chainID === "31337" ? "0x4B28B60CADaeD1f42bCD0e27943ffE7ff277C68f" : deployer;
 
-  await deploy("YourContract", {
+  await deploy("SecondContract", {
     from: deployer,
     // Contract constructor arguments
-    args: [admin, "Reputation", "REP"],
-    // args: ["0x4B28B60CADaeD1f42bCD0e27943ffE7ff277C68f", "Reputation", "REP"],
+    args: [admin, "Crafted Story", "SCS", admin, 0],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -45,4 +43,4 @@ export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["SecondContract"];

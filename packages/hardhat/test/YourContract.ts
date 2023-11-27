@@ -18,7 +18,10 @@ describe("YourContract", function () {
 
   describe("addReputation", () => {
     it("Should add reputation to the specified address", async function () {
-      await yourContract.addReputation(alice.address, 100);
+      const tx = await yourContract.addReputation(alice.address, 100);
+
+      await expect(tx).to.emit(yourContract, "ReputationAdded").withArgs(alice.address, 100);
+
       // await inside when requires comparing returned value
       expect(await yourContract.reputation(alice.address)).to.equal(100);
     });

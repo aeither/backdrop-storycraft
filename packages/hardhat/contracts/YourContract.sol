@@ -7,6 +7,8 @@ import "hardhat/console.sol";
 import "@thirdweb-dev/contracts/base/ERC20Base.sol";
 
 contract YourContract is ERC20Base {
+	// event ReputationAdded(address indexed user, uint256 amount);
+
 	mapping(address => uint256) public reputation;
 	mapping(address => uint256) private balances;
 
@@ -18,10 +20,11 @@ contract YourContract is ERC20Base {
 
 	// Write functions do not return values for testing
 	function addReputation(address _user, uint256 _amount) external {
-		require(msg.sender == owner(), "Not authorized");
+		// require(msg.sender == owner(), "Not authorized");
 		// require(_canMint(), "Not authorized to mint.");
 
 		reputation[_user] += _amount;
+		// emit ReputationAdded(_user, _amount);
 	}
 
 	receive() external payable {}
