@@ -41,14 +41,16 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10 gap-4">
-        <ul>
-          {timeline.map((item, index) => (
-            <li key={index}>
-              <span>{item.id}</span>
-              <img className="w-full max-w-lg h-auto" src={item.imageUrl} alt="image" />
-            </li>
-          ))}
-        </ul>
+        <div className="w-full flex border rounded-md p-4 m-4">
+          <ul className="flex overflow-x-auto space-x-4">
+            {timeline.map((item, index) => (
+              <li key={index} className="flex-none">
+                {/* <span>{item.id}</span> */}
+                <img className="w-36 h-auto rounded-md" src={item.imageUrl} alt="image" />
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <button
           className="btn btn-primary"
@@ -56,9 +58,25 @@ const Home: NextPage = () => {
             generateStory(timeline[0].imageUrl);
           }}
         >
-          generateStory
+          Generate Story
         </button>
-        <div>{story}</div>
+        <textarea
+          className="textarea textarea-bordered w-full max-w-lg h-96"
+          onChange={e => {
+            setStory(e.target.value);
+          }}
+        >
+          {story}
+        </textarea>
+
+        <button
+          className="btn btn-primary"
+          onClick={async () => {
+            generateStory(timeline[0].imageUrl);
+          }}
+        >
+          Narrate
+        </button>
       </div>
     </>
   );
