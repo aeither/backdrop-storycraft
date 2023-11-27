@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Link from "next/link";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 import useTimelineStore from "~~/services/store/timelineStore";
 import { ChatCompletion } from "~~/types/ai";
@@ -31,11 +29,9 @@ const Home: NextPage = () => {
     console.log("Call successful");
     const data: ChatCompletion = await response.json();
     console.log("🚀 ~ file: story.tsx:28 ~ generateStory ~ data:", data);
-    setStory(data.choices[0].message.content || "");
+    setStory(data.choices[0].message.content || "Something wrong happened :(");
 
     setIsLoading(false);
-    // return data.files[0].src;
-    // Discover
   }
 
   async function genAudio(story: string) {
@@ -79,13 +75,15 @@ const Home: NextPage = () => {
 
         <button
           className="btn btn-primary"
+          disabled={isLoading}
           onClick={async () => {
-            generateStory(timeline[0].imageUrl);
+            await generateStory(timeline[0].imageUrl);
           }}
         >
           Generate Story
         </button>
         <textarea
+          value={story}
           className="textarea textarea-bordered w-full max-w-lg h-96"
           onChange={e => {
             setStory(e.target.value);
@@ -96,6 +94,7 @@ const Home: NextPage = () => {
 
         <button
           className="btn btn-primary"
+          disabled={isLoading}
           onClick={async () => {
             genAudio(story);
           }}
@@ -109,7 +108,7 @@ const Home: NextPage = () => {
             Your browser does not support the audio element.
           </audio>
         ) : (
-          <p>Loading audio...</p>
+          <audio controls> </audio>
         )}
       </div>
     </>
