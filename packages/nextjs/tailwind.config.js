@@ -3,10 +3,11 @@ import { withUt } from "uploadthing/tw";
 export default withUt({
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("daisyui")],
-  darkTheme: "scaffoldEthDark",
+  darkTheme: "night",
   // DaisyUI theme colors
   daisyui: {
     themes: [
+      "night",
       {
         scaffoldEth: {
           primary: "#93BBFB",
