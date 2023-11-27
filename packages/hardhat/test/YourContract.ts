@@ -1,28 +1,31 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { YourContract } from "../typechain-types";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 describe("YourContract", function () {
   // We define a fixture to reuse the same setup in every test.
+  let owner: SignerWithAddress;
+  let alice: SignerWithAddress;
 
   let yourContract: YourContract;
   before(async () => {
-    const [owner] = await ethers.getSigners();
+    [owner, alice] = await ethers.getSigners();
     const yourContractFactory = await ethers.getContractFactory("YourContract");
-    yourContract = (await yourContractFactory.deploy(owner.address)) as YourContract;
+    yourContract = (await yourContractFactory.deploy(owner.address, "Token", "TKN")) as YourContract;
     await yourContract.deployed();
   });
 
-  describe("Deployment", function () {
-    it("Should have the right message on deploy", async function () {
-      expect(await yourContract.greeting()).to.equal("Building Unstoppable Apps!!!");
+  describe("addReputation", () => {
+    it("Should add reputation to the specified address", async function () {
+      await yourContract.addReputation(alice.address, 100);
+      // await inside when requires comparing returned value
+      expect(await yourContract.reputation(alice.address)).to.equal(100);
     });
 
-    it("Should allow setting a new message", async function () {
-      const newGreeting = "Learn Scaffold-ETH 2! :)";
-
-      await yourContract.setGreeting(newGreeting);
-      expect(await yourContract.greeting()).to.equal(newGreeting);
+    // await outside when expecting write to fail
+    it("Should not add reputation to the owner's address", async function () {
+      await expect(yourContract.connect(alice).addReputation(owner.address, 100)).to.be.revertedWith("Not authorized");
     });
   });
 });
