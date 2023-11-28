@@ -114,10 +114,16 @@ const config: HardhatUserConfig = {
     base: {
       url: "https://mainnet.base.org",
       accounts: [deployerPrivateKey],
+      gas: 2100000,
+      gasPrice: 8000000000,
+      saveDeployments: true,
     },
     baseGoerli: {
       url: "https://goerli.base.org",
       accounts: [deployerPrivateKey],
+      gas: 2100000,
+      gasPrice: 8000000000,
+      saveDeployments: true,
     },
     scrollSepolia: {
       url: "https://sepolia-rpc.scroll.io",
