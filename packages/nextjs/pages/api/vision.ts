@@ -21,7 +21,7 @@ const engineId = "stable-diffusion-v1-6";
 
 async function handler(req: NextRequest) {
   const { imageUrls } = (await req.json()) as TextRequestBody;
-  console.log("🚀 ~ file: vision.ts:24 ~ handler ~ imageUrl:", imageUrls);
+  console.log("🚀 ~ file: vision.ts:24 ~ handler ~ imageUrls:", imageUrls);
   if (!imageUrls) throw new Error("Missing imageUrl");
 
   const imageObjects: string | { type: "image_url"; image_url: string }[] = [];
@@ -45,11 +45,12 @@ async function handler(req: NextRequest) {
         role: "user",
         content: [
           "Describe the images in a few sentences. Add excitement and emotion to the story. Be concise and clear. The story should connect seamlessly from one image to the next.",
-          [...imageObjects] as any,
+          ...imageObjects,
         ],
       },
     ],
   };
+  console.log("🚀 ~ file: vision.ts:53 ~ handler ~ body:", body);
 
   let result = null;
   try {
@@ -73,6 +74,7 @@ async function handler(req: NextRequest) {
     console.log(e);
   }
 
+  console.log("🚀 ~ file: vision.ts:81 ~ handler ~ result:", result);
   return NextResponse.json(result);
 }
 
