@@ -80,7 +80,7 @@ const Home: NextPage = () => {
     await writeAsync();
   };
 
-  async function generateStory(imageUrl: string) {
+  async function generateStory(imageUrls: string[]) {
     console.log("Calling API");
     setIsLoading(true);
 
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ imageUrl }),
+      body: JSON.stringify({ imageUrls }),
     });
 
     if (!response.ok) {
@@ -147,7 +147,8 @@ const Home: NextPage = () => {
           className="btn btn-primary"
           disabled={isLoading}
           onClick={async () => {
-            await generateStory(timeline[0].imageUrl);
+            const imageUrls = timeline.map(item => item.imageUrl);
+            await generateStory(imageUrls);
           }}
         >
           Generate Story
