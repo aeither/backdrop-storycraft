@@ -71,8 +71,8 @@ const Home: NextPage = () => {
 
     // And upload the data with the upload function
     const [uri] = await upload({ data: dataToUpload });
-    console.log("🚀 ~ file: narrate.tsx:63 ~ uploadData ~ uri:", uri);
     const url = "https://cloudflare-ipfs.com/ipfs/" + removeIpfsPrefix(uri); // use gateway
+    console.log("🚀 ~ file: narrate.tsx:63 ~ uploadData ~ uri:", url);
     setUri(url);
   };
 
