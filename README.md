@@ -14,16 +14,12 @@ https://backdrop-storycraft.vercel.app/
 
 ## What to test
 
-Upload photo
-Edit photo
-Generate image
-
-Generate Script
-Edit Script
-Narrate Script
-Mint NFT
-
-Donate to Creator
+Upload, Edit, and Generate photos. Make sure the photo is 1024x1024 and in PNG format.
+Add the images to the timeline.
+Generate Script from the images, Edit Script.
+Generate audio narration.
+Turn your creations into unique digital assets by Minting NFTs.
+Donate favorite creator.
 
 <!-- Share Form: author eth address, story, photos-->
 <!-- Upvote Button: send token, add reputation-->
