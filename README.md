@@ -1,5 +1,30 @@
 # StoryCraft
 
+## Overview
+
+Describing stories can be hard specially if we are not creative describer of our thoughts and things we have seen. Story Craft helps content creators to make compelling stories from photos or generate images from our imagination with AI. Then we can create the seamless narration from all the photos. Last but not list those narrations can be minted as NFT on Base which are shown in the discovery section for fans to support their favorite content creator.
+
+## Video
+
+
+
+## Demo
+
+https://backdrop-storycraft.vercel.app/
+
+## What to test
+
+Upload photo
+Edit photo
+Generate image
+
+Generate Script
+Edit Script
+Narrate Script
+Mint NFT
+
+Donate to Creator
+
 <!-- Share Form: author eth address, story, photos-->
 <!-- Upvote Button: send token, add reputation-->
 <!-- New User Claim: claim token-->
