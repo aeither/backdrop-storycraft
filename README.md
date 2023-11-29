@@ -2,7 +2,7 @@
 
 ## Overview
 
-Describing stories can be hard specially if we are not creative describer of our thoughts and things we have seen. Story Craft helps content creators to make compelling stories from photos or generate images from our imagination with AI. Then we can create the seamless narration from all the photos. Last but not list those narrations can be minted as NFT on Base which are shown in the discovery section for fans to support their favorite content creator.
+Describing stories can be hard, especially if we are not creative describers of our thoughts and things we have seen. Story Craft helps content creators make compelling stories from photos or generate images from our imaginations with AI. Then we can create a seamless narration from all the photos. Last but not least, those narrations can be minted as NFT on Base, which are shown in the discovery section for fans to support their favorite content creator.
 
 ## Video
 
