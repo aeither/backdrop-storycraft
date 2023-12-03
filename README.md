@@ -4,7 +4,7 @@
 
 # StoryCraft
 
-Crafting stories worth sharing. StoryCraft helps content creators and vloggers to generate narrations from photos. Start as easy as Upload, generate, narrate and monetize.
+Generate compelling narration from AI edited photos and monetize it.
 
 ## Overview
 
